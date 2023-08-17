@@ -11,7 +11,7 @@
   "license": "MIT",
   "commands": [
     {
-      "name": "obsidian-smart-capture",
+      "name": "capture",
       "title": "Obsidian Smart Capture",
       "description": "Capture whats on your screen into obsidian",
       "mode": "view"
