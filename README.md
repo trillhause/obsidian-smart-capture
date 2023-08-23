@@ -25,8 +25,8 @@ I am combined two power community driven tools to build an Open source product t
 ### II Obsidian AdvancedURI plugin
 *Skip to next section if you have AdvancedURI plugin installed*
 1. Enable community plugins in Obsidian preferences
-2. Search for `Advanced URI`
   <img src="https://raw.githubusercontent.com/trillhause/obsidian-smart-capture/main/assets/screenshots/O1.png" width="600">
+2. Search for `Advanced URI`
 3. Install and Enable it 
   <img src="https://raw.githubusercontent.com/trillhause/obsidian-smart-capture/main/assets/screenshots/O2.png" width="600">
 
