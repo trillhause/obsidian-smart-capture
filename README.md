@@ -17,22 +17,22 @@ I am combined two power community driven tools to build an Open source product t
 
 ## Getting Started
 
-### Obsidian
+### I Obsidian
 *Skip to next section if already have Obsidian*
 1. Download [Obsidian](https://obsidian.md)
 2. Create a new vault
 
-### Obsidian AdvancedURI plugin
+### II Obsidian AdvancedURI plugin
 *Skip to next section if you have AdvancedURI plugin installed*
 1. Enable community plugins in Obsidian preferences
 2. Search for `Advanced URI`
 3. Install and Enable it 
 ![[Screenshot 2023-08-23 at 2.11.07 PM.png]]
 
-### Raycast
+### III Raycast
 1. Download and Install [Raycast](https://www.raycast.com)
 
-### Obsidian Smart Capture
+### IV Obsidian Smart Capture
 1. Open Raycast Preferences and click on Extensions Tab
 2. Install a new extension from store
    ![[Screenshot 2023-08-23 at 2.11.07 PM.png]]
