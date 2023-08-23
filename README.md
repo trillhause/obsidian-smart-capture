@@ -65,9 +65,9 @@ Press `⌘ ⏎` to capture it and create a new Obsidian Note!
 The popup will remember the vault and path you used to capture the last note and it will open with same settings every trigger
 
 ## Future
-I originally built this for personal use but after positive response on Reddit, I open sourced and released it everyone to use
+I originally built this for personal use but after positive response on Reddit, I open sourced and released it for everyone.
 
-The goal is to add more context awareness to Obsidian Smart Capture and make the best quick capture tool for Obsidian.
+The goal is to add more context awareness to Obsidian Smart Capture and make it the best quick capture tool for Obsidian. (similar to [Lazy](https://lazy.so))
 
 You can [make a feature request here](https://github.com/raycast/extensions/issues/new?title=%5BObsidian+Smart+Capture%5D+...&template=extension_feature_request.yml&labels=extension%2Cfeature%2Brequest&extension-url=https%3A%2F%2Fwww.raycast.com%2Fmillin_gabani%2Fobsidian-smart-capture&body=%0A%3C%21--%0APlease+update+the+title+above+to+consisely+describe+the+issue%0A--%3E%0A%0A%23%23%23+Extension%0A%0A%23%7Brepository_url%28extension.latest_version%29%7D%0A%0A%23%23%23+Description%0A%0A%3C%21--%0ADescribe+the+feature+and+the+current+behavior%2Fstate.%0A--%3E%0A%0A%23%23%23+Who+will+benefit+from+this+feature%3F%0A%0A%23%23%23+Anything+else%3F%0A%0A%3C%21--%0ALinks%3F+References%3F+Anything+that+will+give+us+more+context%21%0ATip%3A+You+can+attach+images+or+log+files+by+clicking+this+area+to+highlight+it+and+then+dragging+files+in.%0A--%3E%0A%0A)
 [Raycast Store link](https://www.raycast.com/millin_gabani/obsidian-smart-capture)
