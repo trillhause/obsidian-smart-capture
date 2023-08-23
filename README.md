@@ -38,13 +38,13 @@ I am combined two power community driven tools to build an Open source product t
 ### IV Obsidian Smart Capture
 1. Open Raycast Preferences and click on Extensions Tab
 2. Install a new extension from store
-    <img src="https://raw.githubusercontent.com/trillhause/obsidian-smart-capture/main/assets/screenshots/R1.png" width="600">
+  <img src="https://raw.githubusercontent.com/trillhause/obsidian-smart-capture/main/assets/screenshots/R1.png" width="600">
    
 3. Search for `Smart Obsidian Capture` and install the extension
-   <img src="https://raw.githubusercontent.com/trillhause/obsidian-smart-capture/main/assets/screenshots/R2.png" width="600">
+  <img src="https://raw.githubusercontent.com/trillhause/obsidian-smart-capture/main/assets/screenshots/R2.png" width="600">
    
 4. Set a hot key to open Obsidian Smart Capture. Use `⌘ L`  or a custom hotkey
-   <img src="https://raw.githubusercontent.com/trillhause/obsidian-smart-capture/main/assets/screenshots/R3.png" width="600">
+  <img src="https://raw.githubusercontent.com/trillhause/obsidian-smart-capture/main/assets/screenshots/R3.png" width="600">
 
 You are all set up 🥳!
 
