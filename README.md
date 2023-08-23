@@ -1,4 +1,4 @@
-# [Sart Obsidian Capture](https://lazyobsidian.typedream.app)
+# [Smart Obsidian Capture](https://lazyobsidian.typedream.app)
 
 
 ## Overview
