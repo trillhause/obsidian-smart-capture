@@ -3,7 +3,7 @@
 
 ## Overview
 
-Obsidian Smart Capture is a context aware tool to quickly capture anything pon your Mac with minimal effort.
+Obsidian Smart Capture is a context aware tool to quickly capture anything on your Mac with minimal effort.
 
 <img src="https://raw.githubusercontent.com/trillhause/lazy-obsidian/1cb99105fbd39d4d6b03a0785d6e226e066cf6ef/readme-assets/demo.gif" width="500">
 
