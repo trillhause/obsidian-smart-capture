@@ -27,6 +27,7 @@ I have combined two powerful community driven tools to build an Open source prod
 1. Enable community plugins in Obsidian preferences
   <img src="https://raw.githubusercontent.com/trillhause/obsidian-smart-capture/main/assets/screenshots/O1.png" width="600">
 2. Search for `Advanced URI`
+
 3. Install and Enable it 
   <img src="https://raw.githubusercontent.com/trillhause/obsidian-smart-capture/main/assets/screenshots/O2.png" width="600">
 
