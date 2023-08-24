@@ -11,7 +11,7 @@ The notes are captured in [Obsidian](https://obsidian.md). Obsidian is a communi
 
 The quick capture tool is built using [Raycast](https://raycast.com). Raycast is a powerful MacOS launcher (similar to [MacOS spotlight](https://support.apple.com/en-ca/guide/mac-help/mchlp1008/mac)). However, Raycast is also community driven like Obsidian. 
 
-I have combined two power community driven tools to build an Open source product that everyone can use to capture notes with ease.
+I have combined two powerful community driven tools to build an Open source product that everyone can use to capture notes with ease.
 
 *Obsidian smart capture was inspired by [Lazy](https://lazy.so)*
 
