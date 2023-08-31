@@ -20,6 +20,7 @@ import { GET_LINK_INFO_SCRIPT } from "./scripts/get-link";
 import { useObsidianVaults, vaultPluginCheck } from "./utils/utils";
 import { NoVaultFoundMessage } from "./components/Notifications/NoVaultFoundMessage";
 import AdvancedURIPluginNotInstalled from "./components/Notifications/AdvancedURIPluginNotInstalled";
+import { link } from "fs";
 
 export default function Capture() {
   const { ready, vaults: allVaults } = useObsidianVaults();
@@ -91,6 +92,7 @@ export default function Capture() {
     const setText = async () => {
       try {
         const linkInfoStr = await runAppleScript(GET_LINK_INFO_SCRIPT);
+        console.log("linkInfoStr", linkInfoStr);
         const [url, title] = linkInfoStr.split("\t");
         if (url && title) {
           setSelectedResource(url);
