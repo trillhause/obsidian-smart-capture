@@ -15,7 +15,7 @@ import {
   List,
 } from "@raycast/api";
 import { useEffect, useState } from "react";
-import { runAppleScript } from "run-applescript";
+import { runAppleScript } from "@raycast/utils";
 import { GET_LINK_INFO_SCRIPT } from "./scripts/get-link";
 import { useObsidianVaults, vaultPluginCheck } from "./utils/utils";
 import { NoVaultFoundMessage } from "./components/Notifications/NoVaultFoundMessage";
@@ -23,7 +23,7 @@ import AdvancedURIPluginNotInstalled from "./components/Notifications/AdvancedUR
 
 export default function Capture() {
   const { ready, vaults: allVaults } = useObsidianVaults();
-  const [vaultsWithPlugin, vaultsWithoutPlugin] = vaultPluginCheck(allVaults, "obsidian-advanced-uri");
+  const [vaultsWithPlugin] = vaultPluginCheck(allVaults, "obsidian-advanced-uri");
 
   const [defaultVault, setDefaultVault] = useState<string | undefined>(undefined);
   const [defaultPath, setDefaultPath] = useState<string | undefined>(undefined);
@@ -34,7 +34,7 @@ export default function Capture() {
 
   LocalStorage.getItem("path").then((savedPath) => {
     if (savedPath) setDefaultPath(savedPath.toString());
-    else setDefaultPath("/inbox");
+    else setDefaultPath("inbox");
   });
   const formatData = (content?: string, link?: string, highlight?: string) => {
     const data = [];
@@ -52,13 +52,12 @@ export default function Capture() {
 
   async function createNewNote({ fileName, content, link, vault, path, highlight }: Form.Values) {
     try {
-      await LocalStorage.setItem("vault", vault);
-      await LocalStorage.setItem("path", path);
+      if (vault) await LocalStorage.setItem("vault", vault);
+      if (path) await LocalStorage.setItem("path", path);
 
       const target = `obsidian://advanced-uri?vault=${encodeURIComponent(vault)}&filepath=${encodeURIComponent(
         path
       )}/${encodeURIComponent(fileName)}&data=${encodeURIComponent(formatData(content, link, highlight))}`;
-      console.log(target);
       open(target);
       popToRoot();
       closeMainWindow();
@@ -97,14 +96,18 @@ export default function Capture() {
           setSelectedResource(url);
           setResourceInfo(title);
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
 
       try {
         const data = await getSelectedText();
         if (data) {
           setSelectedText(data);
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     setText();
@@ -138,7 +141,6 @@ export default function Capture() {
   } else if (vaultsWithPlugin.length >= 1) {
     return (
       <Form
-        navigationTitle={"Smart Capture"}
         actions={
           <ActionPanel>
             <Action.SubmitForm title="Capture" onSubmit={createNewNote} />
@@ -158,7 +160,7 @@ export default function Capture() {
           </ActionPanel>
         }
       >
-        {ready && vaultsWithPlugin.length > 1 && (
+        {ready && vaultsWithPlugin.length >= 1 && (
           <Form.Dropdown id="vault" title="Vault" defaultValue={defaultVault}>
             {vaultsWithPlugin.map((vault) => (
               <Form.Dropdown.Item key={vault.key} value={vault.name} title={vault.name} icon="🧳" />
