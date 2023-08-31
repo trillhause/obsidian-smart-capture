@@ -20,7 +20,6 @@ import { GET_LINK_INFO_SCRIPT } from "./scripts/get-link";
 import { useObsidianVaults, vaultPluginCheck } from "./utils/utils";
 import { NoVaultFoundMessage } from "./components/Notifications/NoVaultFoundMessage";
 import AdvancedURIPluginNotInstalled from "./components/Notifications/AdvancedURIPluginNotInstalled";
-import { link } from "fs";
 
 export default function Capture() {
   const { ready, vaults: allVaults } = useObsidianVaults();

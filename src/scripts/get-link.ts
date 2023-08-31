@@ -6,7 +6,10 @@ end tell
 if "Safari" is in activeApp then
     tell application "Safari"
         if (exists front document) then
-            return URL of front document & "\\t" & name of front document
+            set frontDocument to front document
+            set documentURL to URL of frontDocument
+            set tabTitle to name of frontDocument
+            return documentURL & "\\t" & tabTitle
         else
             error "Safari is not displaying a web page!"
         end if
@@ -14,36 +17,15 @@ if "Safari" is in activeApp then
 else if "Google Chrome" is in activeApp then
     tell application "Google Chrome"
         if (exists active tab of front window) then
-            return URL of active tab of front window & "\\t" & title of active tab of front window
+            set activeTab to active tab of front window
+            set tabURL to URL of activeTab
+            set tabTitle to title of activeTab
+            return tabURL & "\\t" & tabTitle
         else
             error "Chrome is not displaying a web page!"
         end if
     end tell
-else if "Brave Browser" is in activeApp then
-    tell application "Brave Browser"
-        if (exists active tab of front window) then
-            return URL of active tab of front window & "\\t" & title of active tab of front window
-        else
-            error "Brave Browser is not displaying a web page!"
-        end if
-    end tell
-else if "Arc" is in activeApp then
-    tell application "Arc"
-	    return URL of active tab of front window & "\\t" & title of active tab of front window
-    end tell
-else if "Firefox" is in activeApp then
-    tell application "Arc"
-	    return URL of active tab of front window & "\\t" & title of active tab of front window
-    end tell
-else if "Microsoft Edge" is in activeApp then
-    tell application "Arc"
-	    return URL of active tab of front window & "\\t" & title of active tab of front window
-    end tell
-else if "Opera" is in activeApp then
-    tell application "Arc"
-	    return URL of active tab of front window & "\\t" & title of active tab of front window
-    end tell
 else
-    error "Supported browser not in focus. Please switch to a supported browser and try again."
+    error "Safari or Google Chrome is not in focus. Please switch to either Safari or Chrome and try again."
 end if
 `;
