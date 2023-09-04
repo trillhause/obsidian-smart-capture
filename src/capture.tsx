@@ -16,7 +16,7 @@ import {
 } from "@raycast/api";
 import { useEffect, useState } from "react";
 import { runAppleScript } from "@raycast/utils";
-import { GET_ACTIVE_APP_SCRIPT, GET_LINK_FROM_BROWSER_SCRIPT, SUPPORTED_BROWSERS } from "./scripts/get-link";
+import { GET_ACTIVE_APP_SCRIPT, GET_LINK_FROM_BROWSER_SCRIPT, SUPPORTED_BROWSERS } from "./scripts/browser";
 import { useObsidianVaults, vaultPluginCheck } from "./utils/utils";
 import { NoVaultFoundMessage } from "./components/Notifications/NoVaultFoundMessage";
 import AdvancedURIPluginNotInstalled from "./components/Notifications/AdvancedURIPluginNotInstalled";
