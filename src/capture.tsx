@@ -21,6 +21,85 @@ import { useObsidianVaults, vaultPluginCheck } from "./utils/utils";
 import { NoVaultFoundMessage } from "./components/Notifications/NoVaultFoundMessage";
 import AdvancedURIPluginNotInstalled from "./components/Notifications/AdvancedURIPluginNotInstalled";
 
+import * as fs from "fs";
+import path from "path";
+
+import { Vault } from "./utils/interfaces";
+
+function validFile(file: string, includes: string[]) {
+  for (const include of includes) {
+    if (file.includes(include)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function validFileEnding(file: string, fileEndings: string[]) {
+  for (const ending of fileEndings) {
+    if (file.endsWith(ending)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function validFolder(folder: string, exFolders: string[]) {
+  for (let f of exFolders) {
+    if (f.endsWith("/")) {
+      f = f.slice(0, -1);
+    }
+    if (folder.includes(f)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function walkFilesHelper(dirPath: string, exFolders: string[], fileEndings: string[], arrayOfFiles: string[]) {
+  const files = fs.readdirSync(dirPath);
+
+  arrayOfFiles = arrayOfFiles || [];
+
+  for (const file of files) {
+    const next = fs.statSync(dirPath + "/" + file);
+    if (next.isDirectory() && validFile(file, [".git", ".obsidian", ".trash", ".excalidraw", ".mobile"])) {
+      arrayOfFiles = walkFilesHelper(dirPath + "/" + file, exFolders, fileEndings, arrayOfFiles);
+    } else {
+      if (
+        validFileEnding(file, fileEndings) &&
+        file !== ".md" &&
+        !file.includes(".excalidraw") &&
+        !dirPath.includes(".obsidian") &&
+        validFolder(dirPath, exFolders)
+      ) {
+        arrayOfFiles.push(path.join(dirPath, "/", file));
+      }
+    }
+  }
+
+  return arrayOfFiles;
+}
+
+function findRightVault(vaultName: string, vaultsWithPlugin: Vault[]) {
+  for (let vault of vaultsWithPlugin) {
+    if (vaultName == vault.name) {
+      return vault.path;
+    }
+  }
+  return "";
+}
+
+function findFilePathInVault(allFilesWithPath: string[], fileName: string) {
+  for (let filePath of allFilesWithPath) {
+    let splitArray = filePath.split("/");
+    if (splitArray.includes(fileName)) {
+      return filePath;
+    }
+  }
+  return "";
+}
+
 export default function Capture() {
   const { ready, vaults: allVaults } = useObsidianVaults();
   const [vaultsWithPlugin] = vaultPluginCheck(allVaults, "obsidian-advanced-uri");
@@ -51,7 +130,24 @@ export default function Capture() {
   };
 
   async function createNewNote({ fileName, content, link, vault, path, highlight }: Form.Values) {
-    try {
+    const vaultPath = findRightVault(vault, vaultsWithPlugin);
+
+    console.log(vaultPath);
+    console.log(fileName);
+
+    const allFiles = walkFilesHelper(vaultPath, [], [".md"], []);
+
+    let filePath = findFilePathInVault(allFiles, fileName + ".md");
+    let fileExists = false;
+
+    if (filePath != "") {
+      console.log("This file exists!");
+      fileExists = true;
+    } else {
+      console.log("This file does not exist!");
+    }
+
+    /*try {
       if (vault) await LocalStorage.setItem("vault", vault);
       if (path) await LocalStorage.setItem("path", path);
 
@@ -67,15 +163,25 @@ export default function Capture() {
         style: Toast.Style.Failure,
         title: "Failed to capture. Try again",
       });
-    }
+    }*/
 
     // Save vault and path to local storage
     await LocalStorage.setItem("vault", vault);
     await LocalStorage.setItem("path", path);
 
-    const target = `obsidian://advanced-uri?vault=${encodeURIComponent(vault)}&filepath=${encodeURIComponent(
-      path
-    )}/${encodeURIComponent(fileName)}&data=${encodeURIComponent(formatData(content, link, highlight))}`;
+    let target = "";
+    if (!fileExists) {
+      target = `obsidian://advanced-uri?vault=${encodeURIComponent(vault)}&filepath=${encodeURIComponent(
+        path
+      )}/${encodeURIComponent(fileName)}&data=${encodeURIComponent(formatData(content, link, highlight))}`;
+    } else {
+      //todo match the path to the actual file_path
+      content = "#### New Thought\n" + content;
+      target = `obsidian://advanced-uri?vault=${encodeURIComponent(vault)}&filepath=${encodeURIComponent(
+        path
+      )}/${encodeURIComponent(fileName)}&data=${encodeURIComponent(formatData(content, link, highlight))}&mode=append`;
+    }
+
     open(target);
     popToRoot();
     showHUD("Note Captured", { clearRootSearch: true });
@@ -142,6 +248,7 @@ export default function Capture() {
   } else if (vaultsWithPlugin.length === 0) {
     return <AdvancedURIPluginNotInstalled />;
   } else if (vaultsWithPlugin.length >= 1) {
+    console.log("Hello World!!");
     return (
       <Form
         actions={
