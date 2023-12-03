@@ -100,6 +100,16 @@ function findFilePathInVault(allFilesWithPath: string[], fileName: string) {
   return "";
 }
 
+function extractLocalPath(filePath: string, vault: string, fileName: string) {
+  let splitArray = filePath.split(vault);
+  //console.log(splitArray);
+  let relPathComp = splitArray[1];
+  //console.log(relPathComp.split(fileName));
+  let localPath = relPathComp.split(fileName)[0];
+  localPath = localPath.substring(1, localPath.length - 1);
+  return localPath;
+}
+
 export default function Capture() {
   const { ready, vaults: allVaults } = useObsidianVaults();
   const [vaultsWithPlugin] = vaultPluginCheck(allVaults, "obsidian-advanced-uri");
@@ -132,9 +142,6 @@ export default function Capture() {
   async function createNewNote({ fileName, content, link, vault, path, highlight }: Form.Values) {
     const vaultPath = findRightVault(vault, vaultsWithPlugin);
 
-    console.log(vaultPath);
-    console.log(fileName);
-
     const allFiles = walkFilesHelper(vaultPath, [], [".md"], []);
 
     let filePath = findFilePathInVault(allFiles, fileName + ".md");
@@ -143,27 +150,12 @@ export default function Capture() {
     if (filePath != "") {
       console.log("This file exists!");
       fileExists = true;
+      //update file path to the duplicate path
+      path = extractLocalPath(filePath, vault, fileName);
+      console.log(path);
     } else {
       console.log("This file does not exist!");
     }
-
-    /*try {
-      if (vault) await LocalStorage.setItem("vault", vault);
-      if (path) await LocalStorage.setItem("path", path);
-
-      const target = `obsidian://advanced-uri?vault=${encodeURIComponent(vault)}&filepath=${encodeURIComponent(
-        path
-      )}/${encodeURIComponent(fileName)}&data=${encodeURIComponent(formatData(content, link, highlight))}`;
-      open(target);
-      popToRoot();
-      closeMainWindow();
-      showHUD("Note Captured", { clearRootSearch: true });
-    } catch (e) {
-      showToast({
-        style: Toast.Style.Failure,
-        title: "Failed to capture. Try again",
-      });
-    }*/
 
     // Save vault and path to local storage
     await LocalStorage.setItem("vault", vault);
@@ -175,7 +167,6 @@ export default function Capture() {
         path
       )}/${encodeURIComponent(fileName)}&data=${encodeURIComponent(formatData(content, link, highlight))}`;
     } else {
-      //todo match the path to the actual file_path
       content = "#### New Thought\n" + content;
       target = `obsidian://advanced-uri?vault=${encodeURIComponent(vault)}&filepath=${encodeURIComponent(
         path
@@ -248,7 +239,6 @@ export default function Capture() {
   } else if (vaultsWithPlugin.length === 0) {
     return <AdvancedURIPluginNotInstalled />;
   } else if (vaultsWithPlugin.length >= 1) {
-    console.log("Hello World!!");
     return (
       <Form
         actions={
