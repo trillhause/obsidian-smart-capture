@@ -165,14 +165,17 @@ export default function Capture() {
     if (!fileExists) {
       target = `obsidian://advanced-uri?vault=${encodeURIComponent(vault)}&filepath=${encodeURIComponent(
         path
-      )}/${encodeURIComponent(fileName)}&data=${encodeURIComponent(formatData(content, link, highlight))}`;
+      )}/${encodeURIComponent(fileName)}&data=${encodeURIComponent(
+        formatData(content, link, highlight)
+      )}&openmode=silent`;
     } else {
       content = "#### New Thought\n" + content;
       target = `obsidian://advanced-uri?vault=${encodeURIComponent(vault)}&filepath=${encodeURIComponent(
         path
-      )}/${encodeURIComponent(fileName)}&data=${encodeURIComponent(formatData(content, link, highlight))}&mode=append`;
+      )}/${encodeURIComponent(fileName)}&data=${encodeURIComponent(
+        formatData(content, link, highlight)
+      )}&mode=append&openmode=silent`;
     }
-
     open(target);
     popToRoot();
     showHUD("Note Captured", { clearRootSearch: true });
@@ -287,7 +290,7 @@ export default function Capture() {
             onChange={setIncludeHighlight}
           />
         )}
-        <Form.TextArea title="Note" id="content" placeholder={"Notes about the resource"} />
+        <Form.TextArea title="Note" id="content" placeholder={"Notes about the resource"} enableMarkdown={true} />
         {selectedResource && resourceInfo && (
           <Form.TagPicker id="link" title="Link" defaultValue={[selectedResource]}>
             <Form.TagPicker.Item
