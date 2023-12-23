@@ -153,7 +153,6 @@ export default function Capture() {
       fileExists = true;
       //update file path to the duplicate path
       path = extractLocalPath(filePath, vault, fileName);
-      console.log(path);
     } else {
       console.log("This file does not exist!");
     }
@@ -174,21 +173,21 @@ export default function Capture() {
 
       fs.writeFile(fullPath, content, (err) => {
         if (err) {
-          showHUD("Failed to Capture Note", { clearRootSearch: true });
+          showHUD("🔴 Failed to Capture Note", { clearRootSearch: true });
 
           throw err;
         }
-        console.log(`The text has been added for the first time  to ${fullPath}`);
+        //console.log(`The text has been added for the first time  to ${fullPath}`);
       });
     } else {
-      content = "\n\n#### New Thought\n#captured\n" + formatData(content, link, highlight);
+      content = "\n\n#### New Thought\n#captured\n\n" + formatData(content, link, highlight);
 
       fs.appendFile(filePath, content, (err) => {
         if (err) {
-          showHUD("Failed to Capture Note", { clearRootSearch: true });
+          showHUD("🔴 Failed to Capture Note", { clearRootSearch: true });
           throw err;
         }
-        console.log(`The text has been appended to ${filePath}`);
+        //console.log(`The text has been appended to ${filePath}`);
       });
 
       /*target = `obsidian://advanced-uri?vault=${encodeURIComponent(vault)}&filepath=${encodeURIComponent(
@@ -200,7 +199,7 @@ export default function Capture() {
 
     //open(target);
     popToRoot();
-    showHUD("Note Captured", { clearRootSearch: true });
+    showHUD("🟢 Note Captured", { clearRootSearch: true });
   }
 
   const [selectedText, setSelectedText] = useState<string>("");
