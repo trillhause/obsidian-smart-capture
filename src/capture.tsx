@@ -127,15 +127,16 @@ export default function Capture() {
   });
   const formatData = (content?: string, link?: string, highlight?: string) => {
     const data = [];
+    if (highlight) {
+      data.push(`> [!snippet] Quote\n${selectedText}`);
+    }
     if (content) {
-      data.push(content);
+      data.push(`> [!hint] Note\n${content}`);
     }
     if (link) {
-      data.push(`[${resourceInfo}](${link})`);
+      data.push(`Source: [${resourceInfo}](${link})`);
     }
-    if (highlight) {
-      data.push(`> ${selectedText}`);
-    }
+
     return data.join("\n\n");
   };
 
@@ -163,20 +164,41 @@ export default function Capture() {
 
     let target = "";
     if (!fileExists) {
-      target = `obsidian://advanced-uri?vault=${encodeURIComponent(vault)}&filepath=${encodeURIComponent(
+      /*target = `obsidian://advanced-uri?vault=${encodeURIComponent(vault)}&filepath=${encodeURIComponent(
         path
-      )}/${encodeURIComponent(fileName)}&data=${encodeURIComponent(
-        formatData(content, link, highlight)
-      )}&openmode=silent`;
+      )}/${encodeURIComponent(fileName)}&data=${encodeURIComponent(formatData(content, link, highlight))}`;*/
+
+      const fullPath = vaultPath + "/" + path + "/" + fileName + ".md";
+
+      content = `Status: #state/📥\nTags: #captured\n# ${fileName}\n` + formatData(content, link, highlight);
+
+      fs.writeFile(fullPath, content, (err) => {
+        if (err) {
+          showHUD("Failed to Capture Note", { clearRootSearch: true });
+
+          throw err;
+        }
+        console.log(`The text has been added for the first time  to ${fullPath}`);
+      });
     } else {
-      content = "#### New Thought\n" + content;
-      target = `obsidian://advanced-uri?vault=${encodeURIComponent(vault)}&filepath=${encodeURIComponent(
+      content = "\n\n#### New Thought\n#captured\n" + formatData(content, link, highlight);
+
+      fs.appendFile(filePath, content, (err) => {
+        if (err) {
+          showHUD("Failed to Capture Note", { clearRootSearch: true });
+          throw err;
+        }
+        console.log(`The text has been appended to ${filePath}`);
+      });
+
+      /*target = `obsidian://advanced-uri?vault=${encodeURIComponent(vault)}&filepath=${encodeURIComponent(
         path
-      )}/${encodeURIComponent(fileName)}&data=${encodeURIComponent(
-        formatData(content, link, highlight)
-      )}&mode=append&openmode=silent`;
+      )}/${encodeURIComponent(fileName)}&data=${encodeURIComponent(formatData(content, link, highlight))}&mode=append`;*/
     }
-    open(target);
+
+    //What if I write to disk directly without opening app?
+
+    //open(target);
     popToRoot();
     showHUD("Note Captured", { clearRootSearch: true });
   }
