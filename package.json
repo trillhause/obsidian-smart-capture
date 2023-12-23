@@ -5,6 +5,10 @@
   "description": "Smart capture anything into Obsidian",
   "icon": "command-icon.png",
   "author": "millin_gabani",
+  "contributors": [
+    "millin_gabani",
+    "omar"
+  ],
   "categories": [
     "Productivity"
   ],
